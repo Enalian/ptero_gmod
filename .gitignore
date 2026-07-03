@@ -1,0 +1,11 @@
+# mac os shit
+*.DS_Store
+*.ds_store
+
+# vs code shit
+*.vscode
+
+# manual scripts
+*.sh
+!entrypoint.sh
+!git_sync.sh
