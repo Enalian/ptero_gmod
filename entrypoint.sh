@@ -54,6 +54,10 @@ NOW_BETAID=$( [ -f "$HOME/.now-betaid" ] && cat "$HOME/.now-betaid" || printf %s
 NOW_BETAID=$(trim "$NOW_BETAID")
 if [[ "$NOW_BETAID" != "$SRCDS_BETAID" || "$AUTO_UPDATE" == "1" ]]; then
     ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update 4020 $( [[ -z "${SRCDS_BETAID}" ]] || printf %s "-beta ${SRCDS_BETAID}" ) $( [[ "${NEED_VALIDATE}" == "0" || -z "${NEED_VALIDATE}" ]] || printf %s "validate" ) +quit
+    if [ ! -d "/home/container/garrysmod" ] && [ ! -f "/home/container/srcds_run" ] && [ ! -f "/home/container/srcds_linux" ]; then
+        ./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir /home/container +login anonymous +app_update 4020 +quit
+        ./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType linux +force_install_dir /home/container +login anonymous +app_update 4020 validate +quit
+    fi
     printf %s "$SRCDS_BETAID" > $HOME/.now-betaid
 fi
 
