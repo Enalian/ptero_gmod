@@ -44,7 +44,7 @@ COPY        ./git_sync.sh ./sync.sh
 RUN         chmod +x sync.sh \
             && shc -r -f sync.sh -o sync_bin
 
-FROM        --platform=$TARGETOS/$TARGETARCH debian:stable-slim
+FROM        --platform=$TARGETOS/$TARGETARCH debian:bookworm-slim
 
 LABEL       author="Anton Chibisu" maintainer="admin@enalian.xyz"
 LABEL       org.opencontainers.image.source="https://github.com/Enalian/ptero_gmod"
