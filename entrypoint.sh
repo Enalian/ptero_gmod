@@ -65,6 +65,7 @@ fi
 chmod 755 ~/garrysmod
 chmod 755 ~/garrysmod/*
 
+# GitHub integration
 if [ "${GITHUB_ENABLED}" == "1" ]; then
     # Get repo url
     GITHUB_DEFAULT_PROTO=$( [[ $GITHUB_PROTO == "ssh" ]] && printf %s 'git@github.com:' || printf %s 'https://github.com/' )
@@ -74,6 +75,12 @@ if [ "${GITHUB_ENABLED}" == "1" ]; then
     fi
     GITHUB_REPO_URL_EXT=$( [[ $GITHUB_REPO == *.git ]] || printf %s '.git' )
     GITHUB_REPO_URL=$GITHUB_REPO_URL_PROTO$GITHUB_REPO$GITHUB_REPO_URL_EXT
+
+    # GitHub auth
+    if [ $GITHUB_PROTO == "https" ] && [ -n "$GITHUB_LOGIN" ] && [ -n "$GITHUB_PASSWORD" ]; then
+        git config --global credential.helper store
+        echo "https://${GITHUB_LOGIN}:${GITHUB_PASSWORD}@github.com" > ~/.git-credentials
+    fi
 
     # Fix directory permissions
     SSH_DIR="$HOME/.ssh"
